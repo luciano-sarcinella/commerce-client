@@ -1,0 +1,48 @@
+// change the theme
+// $theme-colors: (
+//   "primary": #0074d9,
+//   "danger": #ff4136
+// );
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@1,500&family=Martel+Sans:wght@700&display=swap');
+*{
+    font-family: 'Libre Franklin', sans-serif;
+    font-family: 'Martel Sans', sans-serif;
+};
+
+.modal-container-detail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+  
+.modal-content-detail {
+    width: 50%;
+}
+
+@import './style.gold.min.css';
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+// @import './custom.css';
+// @import './style.gold.min.css'
+
+
+
+
+
+
+// <!-- gLightbox gallery-->
+// <link rel="stylesheet" href="vendor/glightbox/css/glightbox.min.css">
+// <!-- Range slider-->
+// <link rel="stylesheet" href="vendor/nouislider/nouislider.min.css">
+// <!-- Choices CSS-->
+// <link rel="stylesheet" href="vendor/choices.js/public/assets/styles/choices.min.css">
+// <!-- Swiper slider-->
+// <link rel="stylesheet" href="vendor/swiper/swiper-bundle.min.css">
