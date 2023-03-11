@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const detailSlice = createSlice({
-  name: 'detail',
+const relatedSlice = createSlice({
+  name: 'related',
   initialState : [],
   reducers: {
-    detailAdded(state, action) {
+    relatedAdded(state, action) {
       const {id} = action.payload
       const producto = action.payload
       const productIndex = state.findIndex(p => p.id === id);
@@ -17,13 +17,13 @@ const detailSlice = createSlice({
   }
 });
 
-export const { detailAdded } = detailSlice.actions;
+export const { relatedAdded } = relatedSlice.actions;
 
-export const todosDetail = (state) => state.detail
+export const todosRelated = (state) => state.related
 
 export const selectDetail = (state, id) => { 
-  const producto = state.detail.find(p => p.id === id);
+  const producto = state.related.find(p => p.id === id);
   return producto
 }
 
-export default detailSlice.reducer;
+export default relatedSlice.reducer;

@@ -3,6 +3,7 @@ import { ProductoCard } from '../Productos/ProductoCard'
 import { useDispatch } from 'react-redux' 
 import { useGetVendidosQuery } from "../../utils/apiSlice"
 import { large } from '../../utils/gridSlice'
+import { relatedAdded } from '../../utils/relatedSlice'
 
 const Vendidos = () => {
 
@@ -16,6 +17,15 @@ const Vendidos = () => {
     isError,
     error
   } = useGetVendidosQuery()
+  if(isSuccess){
+    productos.map(producto =>
+      dispatch(relatedAdded({
+        ...producto,
+        value:1
+        })
+      )
+    )
+  }
 
   let content
 

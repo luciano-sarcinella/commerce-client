@@ -3,19 +3,20 @@ import { useSelector,useDispatch } from 'react-redux'
 import { selectDetail } from "../../utils/detailSlice";
 import { productoAdded } from '../../utils/carritoSlice'
 import { favoritoAdded } from '../../utils/favoritoSlice'
-import { useState } from "react";
+import { useState } from "react"
+import { todosRelated } from "../../utils/relatedSlice";
+import { ProductoCard } from "../Productos/ProductoCard";
 
 const Detail = () => {
   const {pageId} =useParams()
   const id = Number(pageId)
   const producto = useSelector(state => selectDetail(state, id))
   const dispatch = useDispatch()
-
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => {
     setShowModal(!showModal);
-  };
+  }
 
   const handleComprar = () => {
     dispatch(
@@ -59,7 +60,23 @@ const Detail = () => {
   } else {
     urlTag = ''
   }
-    
+  
+  const relacionados = useSelector(todosRelated)
+  const content = relacionados.map(producto =>
+    <ProductoCard
+    key = {producto.id} 
+    id = {producto.id}
+    titulo = {producto.titulo}
+    descripcion = {producto.descripcion}
+    precio = {producto.precio}
+    categoria = {producto.categoria}
+    url = {producto.url}
+    new = {producto.new}
+    sale = {producto.sale}
+    sold = {producto.sold}
+    tag = {producto.tag}
+    />
+  )
   
   return (
     <>
@@ -119,7 +136,7 @@ const Detail = () => {
           {/* RELATED PRODUCTS */}
         <h2 className="h5 text-uppercase mb-4">Related products</h2>
         <div className="row">
-            {/* PRODUCT */}
+            {content}
           {/* <div className="col-lg-3 col-sm-6">
             <div className="product text-center skel-loader">
               <div className="d-block mb-3 position-relative"><a className="d-block" href="detail.html"><img className="img-fluid w-100" src="img/product-1.jpg" alt="..."/></a>

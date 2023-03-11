@@ -4,6 +4,7 @@ import gridReducer from './gridSlice'
 import carritoReducer from './carritoSlice'
 import favoritoReducer from './favoritoSlice'
 import detailReducer from './detailSlice'
+import relatedReducer from './relatedSlice'
 
 export default configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
     carrito: carritoReducer,
     favorito:favoritoReducer,
     detail:detailReducer,
+    related:relatedReducer,
     [apiSlice.reducerPath]: apiSlice.reducer
   },
   middleware: getDefaultMiddleware =>

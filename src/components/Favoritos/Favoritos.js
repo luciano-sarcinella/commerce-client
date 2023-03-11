@@ -38,17 +38,15 @@ const Producto = ({producto})  => {
 const Favoritos = () => {
   const productos = useSelector(todosFavoritos)
   const cantidad = useSelector(cantidadFavoritos)
-//   const totalCompra = useSelector(valorTotal) 
-//   const subTotal = (totalCompra * 0.79).toFixed(2)
+
   let vacio
   if (cantidad === 0 ) {
     vacio = true
   } else {
     vacio = false
   }
-  const  content = productos.map(producto => (
+  const content = productos.map(producto => (
     <Producto key={producto.id} producto={producto} />
-
   ))
 
   return (
@@ -91,7 +89,7 @@ const Favoritos = () => {
                 <div className="bg-light px-4 py-3">
                   <div className="row align-items-center text-center">
                     <div className="col-md-6 mb-3 mb-md-0 text-md-start"><Link className="btn btn-link p-0 text-dark btn-sm" to="/productos/1" ><FontAwesomeIcon icon={faArrowLeft}/> Seguir comprando</Link></div>
-                    <div className="col-md-6 text-md-end"><Link className="btn btn-outline-dark btn-sm rounded-0" to="carrito" >Ir al Carrito <FontAwesomeIcon icon={faArrowRight}/></Link></div>
+                    <div className="col-md-6 text-md-end"><Link className="btn btn-outline-dark btn-sm rounded-0" to="../carrito" relative="path">Ir al Carrito <FontAwesomeIcon icon={faArrowRight}/></Link></div>
                   </div>
                 </div>
               </div>

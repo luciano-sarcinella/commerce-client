@@ -7,10 +7,20 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { faGift } from '@fortawesome/free-solid-svg-icons'
 import { useSelector, useDispatch } from "react-redux"
 import { Link} from "react-router-dom"
-import { todosProductos,cantidadProductos, productoDeleted,increment,decrement,selectCount,valorTotal  } from "../../utils/carritoSlice"
+import toast, { Toaster } from 'react-hot-toast';
+import { useState } from 'react'
+import {
+  todosProductos,
+  cantidadProductos,
+  productoDeleted,
+  increment,
+  decrement,
+  selectCount,
+  valorTotal
+} from "../../utils/carritoSlice"
 
-const Producto = ({producto})  => {
-  
+const Producto = ({producto}, CodigoValido)  => {
+
   const dispatch = useDispatch()
   const count = useSelector(state => selectCount(state, producto.id));
   const totalParcial = () => producto.precio * count;
@@ -29,16 +39,16 @@ const Producto = ({producto})  => {
       <td className="p-3 align-middle border-light">
         <div className="border d-flex align-items-center justify-content-between px-3"><span className="small text-uppercase text-gray headings-font-family">Cantidad</span>
           <div className="quantity">
-            <button className="dec-btn p-0"><FontAwesomeIcon icon={faCaretLeft} onClick={() => dispatch(decrement(producto.id))}/></button>
+            {!CodigoValido &&<button className="dec-btn p-0"><FontAwesomeIcon icon={faCaretLeft} onClick={() => dispatch(decrement(producto.id))}/></button>}
             <span>{count}</span>
-            <button className="inc-btn p-0"><FontAwesomeIcon icon={faCaretRight} onClick={() => dispatch(increment(producto.id))}/></button>
+            {!CodigoValido &&<button className="inc-btn p-0"><FontAwesomeIcon icon={faCaretRight} onClick={() => dispatch(increment(producto.id))}/></button>}
           </div>
         </div>
       </td>
       <td className="p-3 align-middle border-light">
         <p className="mb-0 small">${totalProducto}</p>
       </td>
-      <td className="p-3 align-middle border-light"><button className="btn reset-anchor rounded-0"><FontAwesomeIcon icon={faTrashCan} onClick={() => dispatch(productoDeleted(producto.id))}/></button></td>
+      {!CodigoValido && <td className="p-3 align-middle border-light"><button className="btn reset-anchor rounded-0"><FontAwesomeIcon icon={faTrashCan} onClick={() => dispatch(productoDeleted(producto.id))}/></button></td>}
     </tr>
   )
 }
@@ -49,6 +59,31 @@ const Carrito = () => {
   const cantidad = useSelector(cantidadProductos)
   const totalCompra = useSelector(valorTotal) 
   const subTotal = (totalCompra * 0.79).toFixed(2)
+  const [descuento, setDescuento] = useState(0);
+  const [codigoValido, setCodigoValido] = useState(false);
+  const [cupon, setCupon] = useState();
+  const [mostrarToast, setMostrarToast] = useState(false)
+  const mensajeError = 'Por favor ingrese un numero de cupon valido'
+  const mensajeValido = 'Descuento aplicado con exito!'
+
+  const handleCuponChange = (event) => {
+    setCupon(event.target.value);
+    setCodigoValido(false);
+    setMostrarToast(false);
+  }
+  const aplicarCuponHandler = () => {
+    if (cupon === 'descuento2023') {
+      setDescuento(totalCompra * 0.9);
+      toast.success(mensajeValido)
+      setCodigoValido(true)
+      setMostrarToast(true)
+    } else {
+      setCodigoValido(false);
+      setMostrarToast(true)
+      toast.error(mensajeError)
+    }
+  };
+
   let vacio
   if (cantidad === 0 ) {
     vacio = true
@@ -56,7 +91,7 @@ const Carrito = () => {
     vacio = false
   }
   const  content = productos.map(producto => (
-    <Producto key={producto.id} producto={producto} />
+    <Producto key={producto.id} producto={producto} codigoValido={codigoValido}/>
 
   ))
 
@@ -120,16 +155,21 @@ const Carrito = () => {
                   <div className="card-body">
                     <h5 className="text-uppercase mb-4">Compra Total</h5>
                     <ul className="list-unstyled mb-0">
-                      <li className="d-flex align-items-center justify-content-between"><strong className="text-uppercase small font-weight-bold">Subtotal</strong><span className="text-muted small">$ {subTotal}</span></li>
+                      {codigoValido?
+                      <><li className="d-flex align-items-center justify-content-between"><strong className="text-uppercase small font-weight-bold">Subtotal</strong><span className="text-muted small">$ {subTotal}</span></li>
                       <li className="border-bottom my-2"></li>
-                      <li className="d-flex align-items-center justify-content-between mb-4"><strong className="text-uppercase small font-weight-bold">Total</strong><span>$ {totalCompra}</span></li>
+                      <li className="d-flex align-items-center justify-content-between mb-4"><strong className="text-uppercase small font-weight-bold"><del>Total</del></strong><span><del>$ {totalCompra}</del></span></li>
+                      <li className="d-flex align-items-center justify-content-between mb-4"><strong className="text-uppercase small font-weight-bold">Total</strong><span>$ {descuento.toFixed(2)}</span></li></>
+                      :<><li className="d-flex align-items-center justify-content-between"><strong className="text-uppercase small font-weight-bold">Subtotal</strong><span className="text-muted small">$ {subTotal}</span></li>
+                      <li className="border-bottom my-2"></li>
+                      <li className="d-flex align-items-center justify-content-between mb-4"><strong className="text-uppercase small font-weight-bold">Total</strong><span>$ {totalCompra}</span></li></>
+                      }
                       <li>
-                        <form action="#">
-                          <div className="input-group mb-0">
-                            <input className="form-control" type="text" placeholder="Tengo un cupon!"/>
-                            <button className="btn btn-dark btn-sm w-100" type="submit"> <FontAwesomeIcon icon={faGift}/> Aplicar cupon</button>
-                          </div>
-                        </form>
+                        <div className="input-group mb-0">
+                          <input className="form-control mb-4" type="text" placeholder="Tengo un cupon!" id='cupon' value={cupon} onChange={handleCuponChange}/>
+                          <button className="btn btn-dark btn-sm w-100" onClick={aplicarCuponHandler}> <FontAwesomeIcon icon={faGift}/> Aplicar cupon</button>
+                          {mostrarToast && <Toaster position="bottom-right"/>}
+                        </div>
                       </li>
                     </ul>
                   </div>

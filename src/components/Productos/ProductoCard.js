@@ -33,7 +33,7 @@ export const ProductoCard = (props) => {
         titulo,
         precio,
         url,
-        id,
+        id
       })
     )
   }
@@ -57,9 +57,9 @@ export const ProductoCard = (props) => {
         <Link className="d-block" to={`/detail/${id}`} onClick={handleDetail}><img className="img-fluid w-100" src={`/images/${id}.png`} alt={titulo}/></Link>
         <div className="product-overlay">
           <ul className="mb-0 list-inline">
-            <li className="list-inline-item m-0 p-0"><Link className="btn btn-sm btn-outline-dark rounded-0" href="#!" onClick={handleFav}><FontAwesomeIcon icon={faHeart}/></Link></li>
+            <li className="list-inline-item m-0 p-0"><button className="btn btn-sm btn-outline-dark rounded-0" onClick={handleFav}><FontAwesomeIcon icon={faHeart}/></button></li>
             <li className="list-inline-item m-0 p-0"><Link  className="btn btn-sm btn-dark rounded-0" onClick={handleComprar}>Comprar</Link></li>
-            <li className="list-inline-item me-0"><Link className="btn btn-sm btn-outline-dark rounded-0"  href="#!" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  onClick={() => setShowModal(true)}><FontAwesomeIcon icon={faExpand}/></Link></li>
+            <li className="list-inline-item me-0"><Link className="btn btn-sm btn-outline-dark rounded-0" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  onClick={() => setShowModal(true)}><FontAwesomeIcon icon={faExpand}/></Link></li>
           </ul>
         </div>
       </div>
