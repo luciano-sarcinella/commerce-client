@@ -19,8 +19,7 @@ import {
   valorTotal
 } from "../../utils/carritoSlice"
 
-const Producto = ({producto}, CodigoValido)  => {
-
+const Producto = ({producto, codigoValido})  => {
   const dispatch = useDispatch()
   const count = useSelector(state => selectCount(state, producto.id));
   const totalParcial = () => producto.precio * count;
@@ -39,16 +38,16 @@ const Producto = ({producto}, CodigoValido)  => {
       <td className="p-3 align-middle border-light">
         <div className="border d-flex align-items-center justify-content-between px-3"><span className="small text-uppercase text-gray headings-font-family">Cantidad</span>
           <div className="quantity">
-            {!CodigoValido &&<button className="dec-btn p-0"><FontAwesomeIcon icon={faCaretLeft} onClick={() => dispatch(decrement(producto.id))}/></button>}
+            {!codigoValido &&<button className="dec-btn p-0"><FontAwesomeIcon icon={faCaretLeft} onClick={() => dispatch(decrement(producto.id))}/></button>}
             <span>{count}</span>
-            {!CodigoValido &&<button className="inc-btn p-0"><FontAwesomeIcon icon={faCaretRight} onClick={() => dispatch(increment(producto.id))}/></button>}
+            {!codigoValido  &&<button className="inc-btn p-0"><FontAwesomeIcon icon={faCaretRight} onClick={() => dispatch(increment(producto.id))}/></button>}
           </div>
         </div>
       </td>
       <td className="p-3 align-middle border-light">
         <p className="mb-0 small">${totalProducto}</p>
       </td>
-      {!CodigoValido && <td className="p-3 align-middle border-light"><button className="btn reset-anchor rounded-0"><FontAwesomeIcon icon={faTrashCan} onClick={() => dispatch(productoDeleted(producto.id))}/></button></td>}
+      {!codigoValido  && <td className="p-3 align-middle border-light"><button className="btn reset-anchor rounded-0"><FontAwesomeIcon icon={faTrashCan} onClick={() => dispatch(productoDeleted(producto.id))}/></button></td>}
     </tr>
   )
 }
