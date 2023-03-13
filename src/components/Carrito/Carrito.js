@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { Link} from "react-router-dom"
 import toast, { Toaster } from 'react-hot-toast';
 import { useState } from 'react'
+import { discount } from '../../utils/discountSlice'
 import {
   todosProductos,
   cantidadProductos,
@@ -64,6 +65,7 @@ const Carrito = () => {
   const [mostrarToast, setMostrarToast] = useState(false)
   const mensajeError = 'Por favor ingrese un numero de cupon valido'
   const mensajeValido = 'Descuento aplicado con exito!'
+  const dispatch = useDispatch()
 
   const handleCuponChange = (event) => {
     setCupon(event.target.value);
@@ -76,6 +78,7 @@ const Carrito = () => {
       toast.success(mensajeValido)
       setCodigoValido(true)
       setMostrarToast(true)
+      dispatch(discount())
     } else {
       setCodigoValido(false);
       setMostrarToast(true)

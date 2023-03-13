@@ -5,6 +5,7 @@ import carritoReducer from './carritoSlice'
 import favoritoReducer from './favoritoSlice'
 import detailReducer from './detailSlice'
 import relatedReducer from './relatedSlice'
+import discountReducer from './discountSlice'
 
 export default configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export default configureStore({
     favorito:favoritoReducer,
     detail:detailReducer,
     related:relatedReducer,
+    discount:discountReducer,
     [apiSlice.reducerPath]: apiSlice.reducer
   },
   middleware: getDefaultMiddleware =>

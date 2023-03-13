@@ -1,5 +1,13 @@
+import { valorTotal, todosProductos } from "../../utils/carritoSlice"
+import { useSelector } from "react-redux"
+
 const Checkout = () => {
-  return (
+    const productos = useSelector(todosProductos)
+    const totalCompra = useSelector(valorTotal)
+    const descuento = useSelector(state => state.discount.value)
+
+
+    return (
     <div className="page-holder" >
         <div className="container" >
             {/* Encabezado */}
@@ -129,11 +137,11 @@ const Checkout = () => {
                     <div className="card-body">
                     <h5 className="text-uppercase mb-4">Tu orden</h5>
                     <ul className="list-unstyled mb-0">
-                        <li className="d-flex align-items-center justify-content-between"><strong className="small fw-bold">Red digital smartwatch</strong><span className="text-muted small">$250</span></li>
-                        <li className="border-bottom my-2"></li>
-                        <li className="d-flex align-items-center justify-content-between"><strong className="small fw-bold">Gray Nike running shoes</strong><span className="text-muted small">$351</span></li>
-                        <li className="border-bottom my-2"></li>
-                        <li className="d-flex align-items-center justify-content-between"><strong className="text-uppercase small fw-bold">Total</strong><span>$601</span></li>
+                        {productos.map(producto => (
+                            <><li className="d-flex align-items-center justify-content-between"><strong className="small fw-bold">{producto.titulo}</strong><span className="text-muted small">${descuento === 'descuento' ? (producto.precio * 0.9).toFixed(2) : producto.precio}</span></li>
+                            <li className="border-bottom my-2"></li></>
+                        ))}
+                        <li className="d-flex align-items-center justify-content-between"><strong className="text-uppercase small fw-bold">Total</strong><span>${descuento === 'descuento' ? (totalCompra * 0.9).toFixed(2) : totalCompra}</span></li>
                     </ul>
                     </div>
                 </div>
