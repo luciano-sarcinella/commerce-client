@@ -15,7 +15,8 @@ const ProductosList = () => {
   const {pageId} = useParams()
   const pageIdAsNumber = parseInt(pageId);
   const [precioMaximo, setPrecioMaximo] = useState(1000);
-
+  const isMobile = window.innerWidth <= 768;
+  const showButtons = !isMobile;
   
   const { 
     data: productos = [],
@@ -192,9 +193,11 @@ const ProductosList = () => {
                     <p className="text-sm text-muted mb-0">Mostrando 12 de 61 resultados</p>
                   </div>
                   <div className="col-lg-6">
-                    <ul className="list-inline d-flex align-items-center justify-content-lg-end mb-0"> 
-                      <li className="list-inline-item text-muted me-3"><button className="btn reset-anchor rounded-0" onClick={()=>dispatch(small())}><FontAwesomeIcon icon={faTableCells}/></button></li>
-                      <li className="list-inline-item text-muted me-3"><button className="btn reset-anchor rounded-0" onClick={()=>dispatch(large())}><FontAwesomeIcon icon={faTableCellsLarge}/></button></li>
+                    <ul className="list-inline d-flex align-items-center justify-content-lg-end mb-0">
+                      {showButtons && <>
+                        <li className="list-inline-item text-muted me-3"><button className="btn reset-anchor rounded-0" onClick={()=>dispatch(small())}><FontAwesomeIcon icon={faTableCells}/></button></li>
+                        <li className="list-inline-item text-muted me-3"><button className="btn reset-anchor rounded-0" onClick={()=>dispatch(large())}><FontAwesomeIcon icon={faTableCellsLarge}/></button></li>
+                      </>} 
                       <li className="list-inline-item">
                         <select className="selectpicker text-sm text-muted mb-0" value={selected} onChange={handleChange} data-customclass="form-control form-control-sm"> 
                           <option value="popularidad">Ordenar por </option>

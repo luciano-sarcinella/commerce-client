@@ -34,7 +34,6 @@ export const ProductoCard = (props) => {
     toast.success(mensajeCarrito)
     setMostrarToast(true);
     setTimeout(function(){setMostrarToast(false)} , 2000);
-
   }
   const handleFav = () => {
     dispatch(

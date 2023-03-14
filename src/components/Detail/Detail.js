@@ -6,6 +6,8 @@ import { favoritoAdded } from '../../utils/favoritoSlice'
 import { useState } from "react"
 import { todosRelated } from "../../utils/relatedSlice";
 import { ProductoCard } from "../Productos/ProductoCard";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const Detail = () => {
   const {pageId} =useParams()
@@ -13,6 +15,11 @@ const Detail = () => {
   const producto = useSelector(state => selectDetail(state, id))
   const dispatch = useDispatch()
   const [showModal, setShowModal] = useState(false);
+  const isMobile = window.innerWidth <= 768;
+  const showImage = !isMobile;
+  const [mostrarToast, setMostrarToast] = useState(false)
+  const mensajeFavoritos = 'Producto agregado a favoritos!'
+  const mensajeCarrito = 'Producto agregado al carrito!'
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -25,6 +32,9 @@ const Detail = () => {
         value:1
       })
     )
+    toast.success(mensajeCarrito)
+    setMostrarToast(true);
+    setTimeout(function(){setMostrarToast(false)} , 2000);
   }
   const handleFav = () => {
     dispatch(
@@ -32,6 +42,9 @@ const Detail = () => {
         ...producto
       })
     )
+    toast.success(mensajeFavoritos)
+    setMostrarToast(true);
+    setTimeout(function(){setMostrarToast(false)} , 2000);
   }
 
 
@@ -88,10 +101,12 @@ const Detail = () => {
             <div className="row m-sm-0">
             <div className="col-sm-2 p-sm-0 order-2 order-sm-1 mt-2 mt-sm-0 px-xl-2">
                 <div className="swiper product-slider-thumbs">
-                  <div className="swiper-wrapper">
-                    <div className="swiper-slide h-auto swiper-thumb-item mb-3"><img className="w-100" src={`/images/${producto.id}.png`} alt="..."/></div>
-                    {/* <div className="swiper-slide h-auto swiper-thumb-item mb-3"><img className="w-100" src={`/images/${producto.id}.png`} alt="..."/></div> */}
-                  </div>
+                  {showImage && <>
+                    <div className="swiper-wrapper">
+                      <div className="swiper-slide h-auto swiper-thumb-item mb-3"><img className="w-100" src={`/images/${producto.id}.png`} alt="..."/></div>
+                      {/* <div className="swiper-slide h-auto swiper-thumb-item mb-3"><img className="w-100" src={`/images/${producto.id}.png`} alt="..."/></div> */}
+                    </div>
+                  </>}
                 </div>
               </div>
               <div className="col-sm-10 order-1 order-sm-2">
@@ -155,14 +170,16 @@ const Detail = () => {
         </div>
       </div>      
     </section>
-          {/* Modal */}
-          {showModal && (
-        <div className="modal-container-detail" onClick={toggleModal}>
-          <div className="modal-content-detail">
-            <img className="img-fluid" src={`/images/${producto.id}.png`} alt="..." />
-          </div>
+    {/* Modal */}
+    {showModal && (
+      <div className="modal-container-detail" onClick={toggleModal}>
+        <div className="modal-content-detail">
+          <img className="img-fluid" src={`/images/${producto.id}.png`} alt="..." />
         </div>
-      )}
+      </div>
+    )}
+
+    {mostrarToast && <Toaster position="bottom-right" toastOptions={{duration:3000}}/>}
     </>
   )
 }

@@ -1,10 +1,22 @@
-import Background from '../../img/hero-banner-alt.jpg'
 import {Link} from 'react-router-dom'
+import { useEffect, useState } from 'react';
+
 
 const Banner = () => {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768);
+      };
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <div className="container px-lg-3">
-            <section className="hero pb-3 bg-cover bg-center d-flex align-items-center" style={{backgroundImage: `url(${Background})`}}>
+            <section  className={`hero pb-3 bg-cover bg-center d-flex align-items-center ${isMobile ? 'mobile-background' : 'desktop-background'}`}>
                 <div className="container py-5">
                     <div className="row px-4 px-lg-5">
                     <div className="col-lg-6">

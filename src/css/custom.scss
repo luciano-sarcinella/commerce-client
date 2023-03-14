@@ -26,6 +26,14 @@
     width: 50%;
 }
 
+.desktop-background {
+    background-image: url('../img/hero-banner-alt.jpg');
+}
+  
+.mobile-background {
+    background-image: url('../img/bgr-mobile-1.jpg');
+}
+
 @import './style.gold.min.css';
 
 // Import Bootstrap and its default variables
