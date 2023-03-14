@@ -75,10 +75,10 @@ const Carrito = () => {
   const aplicarCuponHandler = () => {
     if (cupon === 'descuento2023') {
       setDescuento(totalCompra * 0.9);
-      toast.success(mensajeValido)
       setCodigoValido(true)
       setMostrarToast(true)
       dispatch(discount())
+      toast.success(mensajeValido)
     } else {
       setCodigoValido(false);
       setMostrarToast(true)
@@ -110,7 +110,7 @@ const Carrito = () => {
               <div className="col-lg-6 text-lg-end">
                 <nav aria-label="breadcrumb">
                   <ol className="breadcrumb justify-content-lg-end mb-0 px-0 bg-light">
-                    <li className="breadcrumb-item"><a className="text-dark" href="index.html">Inicio</a></li>
+                    <li className="breadcrumb-item"><Link  className="text-dark" to='../inicio' relative="path">Inicio</Link></li>
                     <li className="breadcrumb-item active" aria-current="page">Carrito</li>
                   </ol>
                 </nav>

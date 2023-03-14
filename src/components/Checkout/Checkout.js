@@ -1,5 +1,6 @@
 import { valorTotal, todosProductos } from "../../utils/carritoSlice"
 import { useSelector } from "react-redux"
+import { Link } from "react-router-dom"
 
 const Checkout = () => {
     const productos = useSelector(todosProductos)
@@ -20,8 +21,8 @@ const Checkout = () => {
                     <div className="col-lg-6 text-lg-end">
                         <nav aria-label="breadcrumb">
                         <ol className="breadcrumb justify-content-lg-end mb-0 px-0 bg-light">
-                            <li className="breadcrumb-item"><a className="text-dark" href="index.html">Inicio</a></li>
-                            <li className="breadcrumb-item"><a className="text-dark" href="cart.html">Carrito</a></li>
+                            <li className="breadcrumb-item"><Link  className="text-dark" to='../../inicio' relative="path">Inicio</Link></li>
+                            <li className="breadcrumb-item"><Link  className="text-dark" to='../' relative="path">Carrito</Link></li>
                             <li className="breadcrumb-item active" aria-current="page">Checkout</li>
                         </ol>
                         </nav>

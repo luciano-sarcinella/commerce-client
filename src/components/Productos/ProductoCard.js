@@ -8,6 +8,8 @@ import { useSelector,useDispatch } from 'react-redux'
 import { productoAdded } from '../../utils/carritoSlice'
 import { favoritoAdded } from '../../utils/favoritoSlice'
 import { detailAdded } from '../../utils/detailSlice'
+import toast, { Toaster } from 'react-hot-toast';
+
 
 export const ProductoCard = (props) => {
 
@@ -15,6 +17,9 @@ export const ProductoCard = (props) => {
   const [showModal, setShowModal] = useState(false);
   const cuadrilla = useSelector(state => state.grid.value)
   const dispatch = useDispatch()
+  const [mostrarToast, setMostrarToast] = useState(false)
+  const mensajeFavoritos = 'Producto agregado a favoritos!'
+  const mensajeCarrito = 'Producto agregado al carrito!'
     
   const handleComprar = () => {
     dispatch(
@@ -26,6 +31,10 @@ export const ProductoCard = (props) => {
         value:1
       })
     )
+    toast.success(mensajeCarrito)
+    setMostrarToast(true);
+    setTimeout(function(){setMostrarToast(false)} , 2000);
+
   }
   const handleFav = () => {
     dispatch(
@@ -36,6 +45,10 @@ export const ProductoCard = (props) => {
         id
       })
     )
+    toast.success(mensajeFavoritos)
+    setMostrarToast(true);
+    setTimeout(function(){setMostrarToast(false)} , 2000);
+
   }
   const handleDetail = () => {
     dispatch(
@@ -77,6 +90,8 @@ export const ProductoCard = (props) => {
         onClose={() => setShowModal(false)}
       />
     )}
+    {mostrarToast && <Toaster position="bottom-right" toastOptions={{duration:2000}}/>}
+
   </>
 
   if(cuadrilla === 'large'){
